@@ -1,0 +1,270 @@
+// library.cpp : Definiuje funkcje biblioteki statycznej.
+//
+
+#include "pch.h"
+#include "framework.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// TODO: To jest przykład funkcji biblioteki
+struct Node {
+	int data;
+	struct Node *next;
+};
+class LinkedList
+{
+public:
+	Node *head;
+	Node *tail;
+	int length;
+public:
+	LinkedList()
+	{
+		head = NULL;
+		tail = NULL;
+		length = 0;
+	}
+
+	void append(int number, char place = 'b')
+	{
+		Node *tmp = new Node;
+		tmp->data = number;
+		tmp->next = NULL;
+		
+		if (tmp == NULL)
+		{
+			cout << "memory overflow" << endl;
+			return;
+		}
+
+		if (head == NULL)
+		{
+			head = tmp;
+			length++;
+			return;
+		}
+		
+		switch (place)
+		{
+		case 'f':
+			tmp->next = head;
+			head = tmp;
+			length++;
+			break;
+		case 'b':
+			tail->next = tmp;
+			tail = tail->next;
+			length++;
+			break;
+		default:
+			cout << "incorrect input" << endl;
+			break;
+		}
+	}
+	//Verified
+
+	int open(int index, char operation = 'r', int number = 0)
+	{
+		Node *tmp = NULL;
+		tmp = head;
+
+		int i = 0;
+		if (index + 1 > length)
+		{
+			cout << "out of bounds of list" << endl;
+			return;
+		}
+		for (;i < index - 1; i++)
+		{
+			tmp = tmp->next;
+		}
+		switch (operation)
+		{
+		case 'r':
+			tmp = tmp->next;
+			return tmp->data;
+		case 'w':
+			tmp = tmp->next;
+			tmp->data = number;
+			break;
+		case 'd':
+			Node *del = NULL;
+			del = tmp->next;
+			tmp->next = tmp->next->next;
+			free(del);
+			length--;
+			break;
+		default:
+			cout << "incorrect input" << endl;
+			break;
+		}
+		return;
+	}
+
+	int index(int target)
+	{
+
+		if (index  + 1> length)
+		{
+			cout << "out of bounds of list" << endl;
+			return;
+		}
+
+		Node *tmp = NULL;
+		Node *node = new Node;
+
+		tmp = head;
+		i = 0;
+
+		while (tmp)
+		{
+			if (tmp->data = target) return i;
+			tmp = tmp->next;
+			i++;
+		}
+		return -1;
+	}
+	//find index of a number
+
+	int if_in(int target)
+	{
+
+		if (index + 1 > length)
+		{
+			cout << "out of bounds of list" << endl;
+			return;
+		}
+
+		Node *tmp = NULL;
+		Node *node = new Node;
+
+		tmp = head;
+
+		while (tmp)
+		{
+			if (tmp->data = target) return true;
+			tmp = tmp->next;
+		}
+		return false;
+	}
+	//if in list
+
+	int pop(int index = 0)
+	{
+		Node *tmp = NULL;
+		tmp = head;
+
+		int i = 0;
+		if (index - 1 > length)
+		{
+			cout << "out of bounds of list" << endl;
+			return;
+		}
+
+		if (index == 0)
+		{
+			del = tmp;
+			x = del->data;
+			head = tmp->next;
+			free(del);
+			length--;
+			return x;
+		}
+		
+		if (index == length - 1)
+		{
+			for (;i < index - 1; i++)
+			{
+				tmp = tmp->next;
+			}
+			del = tail;
+			x = del->data;
+			tail = tmp;
+			free(del);
+			length--;
+			return x;
+		}
+		for (;i < index - 1; i++)
+		{
+			tmp = tmp->next;
+		}
+		Node *del = NULL;
+		del = tmp->next;
+		x = del->data;
+		tmp->next = tmp->next->next;
+		free(del);
+		length--;
+		return x;
+	}
+	//80% good
+	void insert(int index, int number)
+	{
+
+		if (index > length)
+		{
+			cout << "out of bounds of list" << endl;
+			return;
+		}
+
+		Node *tmp = NULL;
+		Node *node = new Node;
+
+		tmp = head;
+		length++;
+
+
+		if (index == 0)
+		{
+			node->data = number;
+			node->next = head;
+			head = node;
+			return;
+		}
+		else if (index = length)
+		{
+			node->data = number;
+			node->next = NULL;
+			tail->next = node;
+			tail = node;
+			return;
+		}
+
+		for (int i = 0;i < index - 1; i++)
+		{
+			tmp = tmp->next;
+		}
+
+		node->next = tmp->next;
+		tmp->next = node;
+		node->data = number;
+		
+		return;
+	}
+	//80% good
+
+	void display()
+	{
+		Node *tmp = head;
+		while (tmp)
+		{
+			cout << tmp->data << endl;
+			tmp = tmp->next;
+		}
+	}
+
+	void clear()
+	{
+		Node *node = head;
+		Node *tmp = node;
+		while (node)
+		{
+			node = node->next;
+			free(tmp);
+			tmp = node;
+
+		}
+		length = 0;
+	}
+};
