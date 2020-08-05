@@ -14,7 +14,7 @@ class linked_list {
         linked_list() {
             head = nullptr;
             tail = nullptr;
-            
+            length = 0;
         }
 		/*
         void create(int key) {
@@ -145,13 +145,15 @@ class linked_list {
         {
                 if (head->next == nullptr) 
                 {
-                    delete(head);
-                    head = tail = nullptr;
-                    return;		//check
+                    	delete(head);
+			length = 0;
+                    	head = tail = nullptr;
+                    	return;		//check
                 }
                 struct node *tmp = head;
                 head = head->next;
                 delete(tmp);
+		length--;
                 return;			////check
             }
         else 
@@ -165,6 +167,7 @@ class linked_list {
                 {
                 	prev->next == tmp->next;
                 	delete(temp);
+			length--;
                 	return;
             	}
                 prev = tmp;
@@ -175,6 +178,7 @@ class linked_list {
             {
             		tail = prev;
             		delete(tmp)
+			length--;
             }
         }
     }
@@ -205,7 +209,7 @@ class linked_list {
 			tmp = head;
 			value = tmp->key;
 			head = tmp->next;
-			free(tmp);
+			delete(tmp);
 			length--;
 			return value;
 		}
@@ -222,7 +226,7 @@ class linked_list {
 			tail = prev;
 			tail->next = nullptr;
 			value = tmp->data;
-			free(tmp);
+			delete(tmp);
 			length--;
 			return value;
 		}
@@ -286,7 +290,7 @@ class linked_list {
 		{
 			prev = tmp;
 			tmp = tmp->next;
-			free(prev);
+			delete(prev);
 		}
 		head, tail = nullptr;
 		length = 0;
