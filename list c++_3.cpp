@@ -27,7 +27,7 @@ class linked_list {
         }
 		*/
 	
-	void append(int number, char place = 'b')
+	void append(int number, char place = 'b')    //do i wand to keep char, considering insert() override
 	{
 		Node *tmp = new Node;
 		tmp->data = number;
@@ -65,6 +65,24 @@ class linked_list {
 			break;
 		}
 }
+	
+	int index(int index, int number)
+	{
+		if (index >= length)
+		{
+			cout << "out of bounds of list" << endl;
+			return 1;
+		}
+
+		Node *tmp = head;
+
+		for (int i = 0; i < index; i++)
+		{
+			tmp = tmp->next;
+		}
+		tmp->data = number;
+		return 0;	
+	}	
 	
     void insert(int index, int number = 0)
 	{
